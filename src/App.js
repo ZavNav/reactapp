@@ -1,20 +1,28 @@
 import React, {useState} from 'react';
 import './styles/App.css';
-import PostItem from "./components/PostItem";
+import PostList from "./components/PostList";
+import MyButton from "./components/UI/Button/MyButton";
+import MyInput from "./components/UI/Input/MyInput";
+import PostForm from "./components/PostForm";
 
 function App() {
     const [posts, setPosts] = useState([
-        {id: 1, title: 'JS', body: 'Description'},
-        {id: 2, title: 'C#', body: 'Description'},
-        {id: 3, title: 'PHP', body: 'Description'},
-        {id: 4, title: 'PETUHON', body: 'Description'},
+        {id: 1, title: 'JS', desc: 'Description'},
+        {id: 2, title: 'C#', desc: 'Description'},
     ]);
+
+function createPost(newPost) {
+    setPosts(...posts, newPost);
+}
+
+function removePost(post) {
+    setPosts(posts.filter(x => x.id !== post.id));
+}
 
   return (
     <div className="App">
-        {posts.map(post =>
-            <PostItem post={post} key={post.id}/>
-        )}
+        <PostForm create={createPost}/>
+        <PostList posts={posts} title={'Another title'}/>
     </div>
   );
 }
